@@ -1,3 +1,4 @@
+#include "connection.h"
 #include "message.h"
 
 void sendMessageToOtherClients(char* message, int socket_fd) {
@@ -41,6 +42,7 @@ void* recieveAndPrintData(void* args) {
 }
 
 // worker threads
+
 void recieveAndPrintDataOnSeperateThread(struct AcceptedSocket* pSocket) {
 	pthread_t id;
 

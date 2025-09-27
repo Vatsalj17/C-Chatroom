@@ -2,6 +2,9 @@
 #include "message.h"
 #include <errno.h>
 
+struct AcceptedSocket acceptedSockets[BACKLOG];
+int socketsCount;
+
 struct AcceptedSocket* acceptIncomingConnection(int serverSocket_fd) {
 	struct sockaddr_in client_addr;
 	socklen_t clientAddrSize = sizeof(client_addr);

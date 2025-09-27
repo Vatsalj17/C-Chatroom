@@ -1,6 +1,5 @@
 #include "connection.h"
 
-
 int main() {
 	printf("Intializing server...\n");
     int server_fd, opt = 1;

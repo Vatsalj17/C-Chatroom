@@ -1,4 +1,4 @@
-#include "../utils/socketutils.h"
+#include "socketutils.h"
 
 #define IP "127.0.0.1"
 #define START "\033[1G"
@@ -73,7 +73,7 @@ int main() {
             }
             sprintf(buffer, BBLU"%s:"reset" %s", name, line);
             if (strcmp(line, "exit") == 0) break;
-            ssize_t amountSent = send(socket_fd, buffer, strlen(buffer), 0);
+            send(socket_fd, buffer, strlen(buffer), 0);
         }
     }
 

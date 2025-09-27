@@ -1,7 +1,7 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include "../utils/socketutils.h"
+#include "socketutils.h"
 
 #define BACKLOG 10
 
