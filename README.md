@@ -7,9 +7,9 @@ It allows multiple clients to connect to a server, exchange messages in real tim
 
 ## ✨ Features
 
-* Multi-client support (up to `BACKLOG` concurrent clients).
-* Real-time messaging with broadcast to all connected clients.
+* Real-time public and **private messaging**.
 * Usernames are sent once on connection.
+* **List all active users**.
 * Colored terminal output for join/leave notifications and messages.
 * Graceful handling of client disconnections.
 * Lightweight: only uses C standard libraries + POSIX sockets and threads.
@@ -42,16 +42,18 @@ It allows multiple clients to connect to a server, exchange messages in real tim
 
 1. **Server**
 
-   * Listens for incoming connections.
-   * Assigns each client a slot in `acceptedSockets[]`.
-   * Spawns a thread per client to handle incoming messages.
-   * Broadcasts all messages (except back to the sender).
+* Listens for incoming connections.
+* Assigns each client a slot in `acceptedSockets[]`.
+* Spawns a thread per client to handle incoming messages.
+* Broadcasts all messages to all clients (except the sender).
+* Handles private messages by looking for a `PVTMSG` prefix and forwarding the message to the intended recipient.
 
 2. **Client**
 
-   * Connects to the server and sends a username.
-   * Spawns a thread to continuously listen for incoming messages.
-   * Main thread handles user input (`getline`), sending messages until `exit`.
+* Connects to the server and sends a username.
+* Spawns a thread to continuously listen for incoming messages.
+* Main thread handles user input (`getline`), sending messages until `exit`.
+* Supports commands like `/users` to see other users and `/chat <username>` to start a private chat.
 
 ---
 
@@ -77,13 +79,12 @@ make client
 ```
 
 Enter your name when prompted, then start chatting.
-Type `exit` to leave the chatroom.
+Type `/help` to see the available commands.
 
 ---
 
 ## 🛠️ Future Improvements
 
-* Add private messaging (`/msg <user> <text>`).
 * Support for file transfers.
 * Authentication (password-based login).
 * Replace thread-per-client model with `select()`/`poll()` for scalability.

@@ -17,7 +17,7 @@ struct AcceptedSocket* acceptIncomingConnection(int serverSocket_fd) {
     if (bytes > 0) {
         name[bytes] = '\0';
         snprintf(socket->name, sizeof(socket->name), "%s", name);
-        snprintf(msg, sizeof(msg), GRN"%s joined"reset, socket->name);
+        snprintf(msg, sizeof(msg), BGRN"%s"GRN" joined"reset, socket->name);
         printf("%s\n", msg);
         sendMessageToOtherClients(msg, client_fd);
     }

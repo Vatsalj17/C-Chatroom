@@ -12,5 +12,7 @@
 #define BUF_SIZE 1024
 #define PORT 7089
 
+#define BACKLOG 10
+
 int createTCPipv4Socket();
 struct sockaddr_in* createIpv4Address(char *ip, int port);

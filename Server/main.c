@@ -10,7 +10,7 @@ int main() {
 	struct sockaddr_in* addr = createIpv4Address(NULL, PORT);
 
     for (int i = 0; i < BACKLOG; i++) {
-        acceptedSockets[i].socket_fd = -1;   // mark all as free initially
+        acceptedSockets[i].socket_fd = -1; // mark all as free initially
     }
 
 	if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {

@@ -1,9 +1,7 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include "socketutils.h"
-
-#define BACKLOG 10
+#include "../utils/socketutils.h"
 
 struct AcceptedSocket {
     int socket_fd;
