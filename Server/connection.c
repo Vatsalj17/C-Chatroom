@@ -16,10 +16,16 @@ struct AcceptedSocket* acceptIncomingConnection(int serverSocket_fd) {
     int bytes = recv(client_fd, name, sizeof(name) - 1, 0);
     if (bytes > 0) {
         name[bytes] = '\0';
-        snprintf(socket->name, sizeof(socket->name), "%s", name);
-        snprintf(msg, sizeof(msg), BGRN"%s"GRN" joined"reset, socket->name);
-        printf("%s\n", msg);
-        sendMessageToOtherClients(msg, client_fd);
+        if (usernameExists(name)) {
+            send(client_fd, "NOTACCEPTED", 12, 0);
+            socket->acceptedSuccessfully = 0;
+        } else {
+            send(client_fd, "ACCEPTED", 9, 0);
+            snprintf(socket->name, sizeof(socket->name), "%s", name);
+            snprintf(msg, sizeof(msg), BGRN"%s"GRN" joined"reset, socket->name);
+            printf("%s\n", msg);
+            sendMessageToOtherClients(msg, client_fd);
+        }
     }
 	socket->acceptedSuccessfully = client_fd >= 0;
 	if (!socket->acceptedSuccessfully) socket->error = client_fd;

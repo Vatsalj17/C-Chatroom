@@ -12,6 +12,14 @@ char *getUsernameByFd(int fd) {
     return user;
 }
 
+bool usernameExists(char *name) {
+    for (int i = 0; i < BACKLOG; i++) {
+        if (acceptedSockets[i].socket_fd != -1 && strcmp(acceptedSockets[i].name, name) == 0)
+            return true;
+    }
+    return false;
+}
+
 void handlePrivateChats(char *message, int sender_fd) {
     char chat[BUF_SIZE];
     char recipientName[50];
@@ -82,7 +90,7 @@ void* recieveAndPrintData(void* args) {
 		}
 	}
 	for (int i = 0; i < BACKLOG; i++) {
-		if (acceptedSockets[i].socket_fd == socket_fd) {
+		if (acceptedSockets[i].socket_fd == socket_fd && !usernameExists(acceptedSockets[i].name)) {
 			acceptedSockets[i].socket_fd = -1;
             char leftMsg[100];
             sprintf(leftMsg, BRED"%s"RED" left the chat"reset, acceptedSockets[i].name);

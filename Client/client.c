@@ -165,8 +165,17 @@ int main() {
 		close(socket_fd);
 		return EXIT_FAILURE;
 	}
-
+    char approval[15];
 	send(socket_fd, name, strlen(name), 0);
+    int bytes = recv(socket_fd, approval, 15, 0);
+    if (bytes <= 0) printf("Server didn't respond\n");
+    if (strcmp(approval, "ACCEPTED")) {
+        printf("Username already exists\n");
+        free(name);
+        close(socket_fd);
+        return EXIT_FAILURE;
+    }
+
 	printf("Welcome "BMAG"%s"reset" to my chat app.. (Enter /help for commands)\n", name);
 
 	listenOnNewThread(socket_fd);
