@@ -36,9 +36,11 @@ void handlePrivateChats(char *message, int sender_fd) {
             }
         }
         if (reciever_fd == -1) {
+            send(sender_fd, "NOTFOUND", 9, 0);
             printf("reciever not found\n");
             return;
         }
+        send(sender_fd, "FOUND", 6, 0);
         send(reciever_fd, buffer, strlen(buffer), 0);
     } else {
         printf("parsing error\n");
